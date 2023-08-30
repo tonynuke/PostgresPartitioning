@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Persistence;
+using WebService.GraphQL;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +10,18 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services
+    .AddGraphQLServer()
+    .RegisterDbContext<ApplicationContext>()
+    .AddSorting()
+    .AddFiltering()
+    .AddProjections()
+    .ConfigureSchema(configureSchema =>
+    {
+        //configureSchema.AddType
+    })
+    .AddQueryType<Query>();
 
 var connextionString = builder.Configuration.GetConnectionString("ApplicationContext");
 builder.Services.AddDbContext<ApplicationContext>(
@@ -46,5 +59,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapGraphQL();
 
 app.Run();

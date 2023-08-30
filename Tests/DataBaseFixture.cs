@@ -1,30 +1,28 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Persistence;
-using System;
 
 namespace Tests
 {
-    public class DataBaseFixture : IDisposable
+    public class DataBaseFixture
     {
-        private readonly ApplicationContext _context;
-
-        public ApplicationContext Context => _context;
-
         public DataBaseFixture()
         {
-            var x = EmbeddedResourceLoader.ReadResourceFile(
-                "Persistence.Sql.CreatePurchasesTable.txt");
+            using var context = CreateContext();
 
-            var factory = new ApplicationDbContextFactory();
-            _context = factory.CreateDbContext(Array.Empty<string>());
-
-            _context.Database.ExecuteSqlRaw(@"DROP SCHEMA public CASCADE; CREATE SCHEMA public;");
-            _context.Database.Migrate();
+            context.Database.EnsureDeleted();
+            context.Database.Migrate();
         }
 
-        public void Dispose()
+        public ApplicationContext CreateContext()
         {
-            //_context.Database.EnsureDeleted();
+            var optionsBuilder = new DbContextOptionsBuilder<ApplicationContext>();
+            optionsBuilder.UseNpgsql(
+                "Host=localhost;Database=partitions;Username=postgres;Password=postgres;Include Error Detail=true;");
+            optionsBuilder.UseSnakeCaseNamingConvention();
+            optionsBuilder.EnableSensitiveDataLogging();
+            optionsBuilder.EnableDetailedErrors();
+
+            return new ApplicationContext(optionsBuilder.Options);
         }
     }
 }

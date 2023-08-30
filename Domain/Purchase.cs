@@ -19,5 +19,7 @@ namespace Domain
         public long PersonId { get; }
 
         public DateTime DateTime { get; }
+
+        public string Comment { get; set; }
     }
 }

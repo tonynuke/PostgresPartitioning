@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Persistence
+namespace Persistence.Configurations
 {
     internal sealed class PurchaseConfiguration
         : IEntityTypeConfiguration<Purchase>
@@ -13,6 +13,8 @@ namespace Persistence
 
             builder.Property(x => x.DateTime);
             builder.Property(x => x.PersonId);
+
+            builder.Property(x => x.Comment);
 
             builder.HasIndex(x => new { x.DateTime, x.PersonId });
         }

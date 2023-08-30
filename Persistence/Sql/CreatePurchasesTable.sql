@@ -18,4 +18,7 @@ CREATE TABLE purchases_2022 PARTITION OF purchases
 CREATE TABLE purchases_2023 PARTITION OF purchases
     FOR VALUES FROM ('2023-01-01') TO ('2024-01-01');
 
+    CREATE TABLE purchases_2024 PARTITION OF purchases
+    FOR VALUES FROM ('2024-01-01') TO ('2025-01-01');
+
 CREATE INDEX ON purchases (date_time, person_id);

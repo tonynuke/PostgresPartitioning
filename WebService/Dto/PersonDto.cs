@@ -1,9 +1,4 @@
 ﻿namespace WebService.Dto
 {
-    public record PersonDto
-    {
-        public DateTime BirthDate { get; set; }
-
-        public PassportDto Passport { get; set; }
-    }
+    public record PersonDto(DateTime BirthDate, PassportDto Passport);
 }

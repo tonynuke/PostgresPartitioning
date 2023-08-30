@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Persistence
+namespace Persistence.Configurations
 {
     internal sealed class PersonConfiguration
         : IEntityTypeConfiguration<Person>
@@ -13,16 +13,11 @@ namespace Persistence
 
             builder.Property(person => person.BirthDate);
 
-            //builder.HasMany(person => person.Purchases).WithOne().HasForeignKey(p => p.PersonId);
+            builder
+                .HasMany(person => person.Purchases)
+                .WithOne()
+                .HasForeignKey(p => p.PersonId);
 
-            //builder.OwnsMany(person => person.Purchases, purchase =>
-            //{
-            //    purchase.WithOwner().HasForeignKey(p => p.PersonId);
-            //    purchase.Property(p => p.Price);
-            //    purchase.Property(p => p.DateTime);
-            //    purchase.Property(p => p.Id);
-            //    purchase.HasKey(p => p.Id);
-            //});
 
             builder.OwnsOne(person => person.Passport, passport =>
             {

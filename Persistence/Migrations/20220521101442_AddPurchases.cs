@@ -10,7 +10,7 @@ namespace Persistence.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             var sql = EmbeddedResourceLoader.ReadResourceFile(
-                "Persistence.Sql.CreatePurchasesTable.txt");
+                "Persistence.Sql.CreatePurchasesTable.sql");
             migrationBuilder.Sql(sql);
         }
 

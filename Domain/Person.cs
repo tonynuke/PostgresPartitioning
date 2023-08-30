@@ -34,9 +34,12 @@ namespace Domain
             Passport = passport;
         }
 
-        public Purchase AddPurchase()
+        public Purchase AddPurchase(string comment)
         {
-            var purchase = new Purchase(Id, DateTime.UtcNow);
+            var purchase = new Purchase(Id, DateTime.UtcNow)
+            {
+                Comment = comment,
+            };
             _purchases.Add(purchase);
 
             return purchase;

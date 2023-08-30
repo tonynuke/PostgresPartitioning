@@ -1,9 +1,4 @@
 ﻿namespace WebService.Dto
 {
-    public record PurchaseDto
-    {
-        public long PersonId { get; set; }
-
-        public DateTime DateTime { get; set; }
-    }
+    public record PurchaseDto(long PersonId, DateTime DateTime);
 }
